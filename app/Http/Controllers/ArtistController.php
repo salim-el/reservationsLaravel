@@ -40,21 +40,16 @@ class ArtistController extends Controller
      */
     public function store(Request $request)
     {
-        // Validation des données du formulaire
         $validated = $request->validate([
             'firstname' => 'required|max:60',
             'lastname'  => 'required|max:60',
         ]);
 
-        // Création d’un nouvel artiste
         $artist = new Artist();
         $artist->firstname = $validated['firstname'];
         $artist->lastname  = $validated['lastname'];
-
-        // Sauvegarde en base de données
         $artist->save();
 
-        // Redirection vers l’index
         return redirect()->route('artist.index');
     }
 
@@ -82,5 +77,22 @@ class ArtistController extends Controller
         return view('artist.show', [
             'artist' => $artist,
         ]);
+    }
+
+    /**
+     * Delete the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function destroy($id)
+    {
+        $artist = Artist::find($id);
+
+        if ($artist) {
+            $artist->delete();
+        }
+
+        return redirect()->route('artist.index');
     }
 }

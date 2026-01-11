@@ -27,3 +27,8 @@ Route::get('/artist/create', [ArtistController::class, 'create'])
 Route::post('/artist', [ArtistController::class, 'store'])
     ->name('artist.store');
 
+Route::delete('/artist/{id}', [ArtistController::class, 'destroy'])
+    ->where('id', '[0-9]+')
+    ->name('artist.delete');
+
+
