@@ -1,30 +1,32 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('title', 'Liste des artistes')
+@section('title', 'Artists')
 
 @section('content')
-    <h1>Liste des {{ $resource }}</h1>
+    <h1>Artists</h1>
 
-    <ul>
-        <li><a href="{{ route('artist.create') }}">Ajouter</a></li>
-    </ul>
+    <p><a href="{{ route('artist.create') }}">Create new artist</a></p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Firstname</th>
-                <th>Lastname</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach($artists as $artist)
-            <tr>
-                <td>{{ $artist->firstname }}</td>
-                <td>
-                    <a href="{{ route('artist.show', $artist->id) }}">{{ $artist->lastname }}</a>
-                </td>
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
+    @if($artists->isEmpty())
+        <p>No artists found.</p>
+    @else
+        <ul>
+            @foreach($artists as $artist)
+                <li>
+                    <a href="{{ route('artist.show', $artist->id) }}">
+                        {{ $artist->firstname }} {{ $artist->lastname }}
+                    </a>
+                    -
+                    <a href="{{ route('artist.edit', $artist->id) }}">Edit</a>
+
+                    <form method="POST" action="{{ route('artist.delete', $artist->id) }}" style="display:inline"
+                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            @endforeach
+        </ul>
+    @endif
 @endsection
