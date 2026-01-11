@@ -28,8 +28,36 @@ class ArtistController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for creating a new resource.
      */
+    public function create()
+    {
+        return view('artist.create');
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        // Validation des données du formulaire
+        $validated = $request->validate([
+            'firstname' => 'required|max:60',
+            'lastname'  => 'required|max:60',
+        ]);
+
+        // Création d’un nouvel artiste
+        $artist = new Artist();
+        $artist->firstname = $validated['firstname'];
+        $artist->lastname  = $validated['lastname'];
+
+        // Sauvegarde en base de données
+        $artist->save();
+
+        // Redirection vers l’index
+        return redirect()->route('artist.index');
+    }
+
     public function edit($id)
     {
         $artist = Artist::find($id);
@@ -39,24 +67,18 @@ class ArtistController extends Controller
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
-        // Validation des données du formulaire
         $validated = $request->validate([
             'firstname' => 'required|max:60',
             'lastname'  => 'required|max:60',
         ]);
 
-        // Le formulaire a été validé, nous récupérons l’artiste à modifier
         $artist = Artist::find($id);
+        $artist->firstname = $validated['firstname'];
+        $artist->lastname  = $validated['lastname'];
+        $artist->save();
 
-        // Mise à jour des données modifiées et sauvegarde dans la base de données
-        $artist->update($validated);
-
-        // Comme dans le support : on renvoie la vue show
         return view('artist.show', [
             'artist' => $artist,
         ]);

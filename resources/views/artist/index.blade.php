@@ -5,6 +5,10 @@
 @section('content')
     <h1>Liste des {{ $resource }}</h1>
 
+    <ul>
+        <li><a href="{{ route('artist.create') }}">Ajouter</a></li>
+    </ul>
+
     <table>
         <thead>
             <tr>
@@ -17,9 +21,7 @@
             <tr>
                 <td>{{ $artist->firstname }}</td>
                 <td>
-                    <a href="{{ route('artist.show', $artist->id) }}">
-                        {{ $artist->lastname }}
-                    </a>
+                    <a href="{{ route('artist.show', $artist->id) }}">{{ $artist->lastname }}</a>
                 </td>
             </tr>
         @endforeach
