@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Price;
+use Illuminate\Http\Request;
 
 class PriceController extends Controller
 {
@@ -12,22 +13,12 @@ class PriceController extends Controller
 
         return view('price.index', [
             'prices' => $prices,
-            'resource' => 'prices',
         ]);
     }
 
-    public function show(string $id)
+    public function show($id)
     {
         $price = Price::findOrFail($id);
 
         return view('price.show', [
-            'price' => $price,
-        ]);
-    }
-
-    public function create() {}
-    public function store(\Illuminate\Http\Request $request) {}
-    public function edit(string $id) {}
-    public function update(\Illuminate\Http\Request $request, string $id) {}
-    public function destroy(string $id) {}
-}
+            'price' => $

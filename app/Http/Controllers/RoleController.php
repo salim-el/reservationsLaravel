@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use Illuminate\Http\Request;
 
 class RoleController extends Controller
 {
@@ -12,11 +13,10 @@ class RoleController extends Controller
 
         return view('role.index', [
             'roles' => $roles,
-            'resource' => 'roles',
         ]);
     }
 
-    public function show(string $id)
+    public function show($id)
     {
         $role = Role::findOrFail($id);
 
@@ -24,10 +24,4 @@ class RoleController extends Controller
             'role' => $role,
         ]);
     }
-
-    public function create() {}
-    public function store(\Illuminate\Http\Request $request) {}
-    public function edit(string $id) {}
-    public function update(\Illuminate\Http\Request $request, string $id) {}
-    public function destroy(string $id) {}
 }

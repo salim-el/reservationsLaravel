@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Locality;
+use Illuminate\Http\Request;
 
 class LocalityController extends Controller
 {
@@ -12,22 +13,15 @@ class LocalityController extends Controller
 
         return view('locality.index', [
             'localities' => $localities,
-            'resource' => 'localities',
         ]);
     }
 
-    public function show(string $id)
+    public function show($postal_code)
     {
-        $locality = Locality::findOrFail($id);
+        $locality = Locality::where('postal_code', $postal_code)->firstOrFail();
 
         return view('locality.show', [
             'locality' => $locality,
         ]);
     }
-
-    public function create() {}
-    public function store(\Illuminate\Http\Request $request) {}
-    public function edit(string $id) {}
-    public function update(\Illuminate\Http\Request $request, string $id) {}
-    public function destroy(string $id) {}
 }
