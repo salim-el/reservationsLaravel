@@ -1,19 +1,11 @@
 @extends('layouts.main')
 
-@section('title', 'Type')
+@section('title', 'Fiche d\'un type')
 
 @section('content')
-    <h1>Détail du type</h1>
+    <h1>{{ ucfirst($type->type) }}</h1>
 
-    <p>
-        <strong>ID :</strong> {{ $type->id }}
-    </p>
-
-    <p>
-        <strong>Type :</strong> {{ $type->type }}
-    </p>
-
-    <p>
-        <a href="{{ route('type.index') }}">← Retour à la liste</a>
-    </p>
+    <nav>
+        <a href="{{ route('type.index') }}">Retour à l'index</a>
+    </nav>
 @endsection
