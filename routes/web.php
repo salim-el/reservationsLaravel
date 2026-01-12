@@ -8,6 +8,7 @@ use App\Http\Controllers\LocalityController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ShowController;
+use App\Http\Controllers\RepresentationController;
 
 // tes routes
 Route::get('/type', [TypeController::class, 'index'])->name('type.index');
@@ -35,3 +36,10 @@ Route::get('/show', [ShowController::class, 'index'])
 Route::get('/show/{id}', [ShowController::class, 'show'])
         ->where('id', '[0-9]+')
         ->name('show.show');
+
+Route::get('/representation', [RepresentationController::class, 'index'])
+        ->name('representation.index');
+
+Route::get('/representation/{id}', [RepresentationController::class, 'show'])
+        ->where('id', '[0-9]+')
+        ->name('representation.show');
