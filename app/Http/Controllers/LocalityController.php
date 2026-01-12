@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class LocalityController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $localities = Locality::all();
@@ -16,9 +19,15 @@ class LocalityController extends Controller
         ]);
     }
 
-    public function show($postal_code)
+    /**
+     * Display the specified resource.
+     * Affiche une localité et tous les lieux qui s’y trouvent
+     */
+    public function show(int $postal_code)
     {
-        $locality = Locality::where('postal_code', $postal_code)->firstOrFail();
+        $locality = Locality::where('postal_code', $postal_code)
+            ->with('locations')
+            ->firstOrFail();
 
         return view('locality.show', [
             'locality' => $locality,
