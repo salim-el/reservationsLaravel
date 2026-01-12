@@ -10,8 +10,13 @@ return new class extends Migration
     {
         Schema::create('localities', function (Blueprint $table) {
             $table->id();
-            $table->string('postal_code', 6);
-            $table->string('locality', 60);
+
+            // Doit être UNIQUE (ou PRIMARY) pour pouvoir être référencé en FK
+            $table->unsignedInteger('postal_code')->unique();
+
+            $table->string('locality', 100);
+
+            $table->timestamps();
         });
     }
 

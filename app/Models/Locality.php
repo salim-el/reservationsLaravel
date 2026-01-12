@@ -4,29 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Locality extends Model
 {
     use HasFactory;
 
-    
-    protected $table = 'localities';
-
-    
-    protected $primaryKey = 'postal_code';
-
-    
-    protected $keyType = 'string';
-
-   
-    public $incrementing = false;
-
-   
     protected $fillable = [
         'postal_code',
         'locality',
     ];
 
-    
-    public $timestamps = false;
+    /**
+     * OneToMany : une Locality possède plusieurs Location
+     */
+    public function locations(): HasMany
+    {
+        return $this->hasMany(Location::class, 'locality_postal_code', 'postal_code');
+    }
 }
