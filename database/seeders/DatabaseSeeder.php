@@ -19,13 +19,11 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             LocalitySeeder::class,
 
-            // Point 22 (dépendances)
+            ReservationSeeder::class,
             LocationSeeder::class,
             ShowSeeder::class,
-	    RepresentationSeeder::class,
-	    ReviewSeeder::class,
-
-
+            RepresentationSeeder::class,
+            ReviewSeeder::class,
         ]);
     }
 }

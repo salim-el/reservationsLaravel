@@ -10,20 +10,14 @@ return new class extends Migration
     {
         Schema::create('representations', function (Blueprint $table) {
             $table->id();
-
+            $table->foreignId('location_id')->nullable();
             $table->foreignId('show_id');
-            $table->foreignId('location_id');
-            $table->dateTime('when');
+            $table->dateTime('schedule');
 
-            $table->timestamps();
-
-            $table->foreign('show_id')
-                ->references('id')->on('shows')
-                ->onDelete('restrict')->onUpdate('cascade');
-
-            $table->foreign('location_id')
-                ->references('id')->on('locations')
-                ->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('location_id')->references('id')->on('locations')
+                    ->onDelete('restrict')->onUpdate('cascade');
+            $table->foreign('show_id')->references('id')->on('shows')
+                    ->onDelete('restrict')->onUpdate('cascade');
         });
     }
 

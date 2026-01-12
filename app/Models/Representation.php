@@ -12,21 +12,21 @@ class Representation extends Model
 
     protected $fillable = [
         'show_id',
+        'schedule',
         'location_id',
-        'when',
     ];
 
     protected $table = 'representations';
 
-    public $timestamps = true;
-
-    public function show(): BelongsTo
-    {
-        return $this->belongsTo(Show::class);
-    }
+    public $timestamps = false;
 
     public function location(): BelongsTo
     {
         return $this->belongsTo(Location::class);
+    }
+
+    public function show(): BelongsTo
+    {
+        return $this->belongsTo(Show::class);
     }
 }

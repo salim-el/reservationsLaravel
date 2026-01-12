@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Representation;
-use App\Models\Show;
 use App\Models\Location;
+use App\Models\Show;
 
 class RepresentationSeeder extends Seeder
 {
@@ -16,26 +16,43 @@ class RepresentationSeeder extends Seeder
         Representation::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        $ayiti = Show::where('slug', 'ayiti')->first();
-        $cible = Show::where('slug', 'cible-mouvante')->first();
+        $data = [
+            [
+                'location_slug'=>'espace-delvaux-la-venerie',
+                'show_slug'=>'ayiti',
+                'schedule'=>'2012-10-12 13:30',
+            ],
+            [
+                'location_slug'=>'dexia-art-center',
+                'show_slug'=>'ayiti',
+                'schedule'=>'2012-10-12 20:30',
+            ],
+            [
+                'location_slug'=>null,
+                'show_slug'=>'cible-mouvante',
+                'schedule'=>'2012-10-02 20:30',
+            ],
+            [
+                'location_slug'=>null,
+                'show_slug'=>'ceci-nest-pas-un-chanteur-belge',
+                'schedule'=>'2012-10-16 20:30',
+            ],
+        ];
 
-        $delvaux = Location::where('slug', 'espace-delvaux-la-venerie')->first();
-        $dexia = Location::where('slug', 'dexia-art-center')->first();
+        foreach ($data as &$row) {
+            $location = !is_null($row['location_slug'])
+                ? Location::firstWhere('slug', $row['location_slug'])
+                : null;
+            unset($row['location_slug']);
 
-        if ($ayiti && $delvaux) {
-            Representation::create([
-                'show_id' => $ayiti->id,
-                'location_id' => $delvaux->id,
-                'when' => '2026-02-01 20:00:00',
-            ]);
+            $show = Show::firstWhere('slug', $row['show_slug']);
+            unset($row['show_slug']);
+
+            $row['location_id'] = $location->id ?? null;
+            $row['show_id'] = $show->id;
         }
+        unset($row);
 
-        if ($cible && $dexia) {
-            Representation::create([
-                'show_id' => $cible->id,
-                'location_id' => $dexia->id,
-                'when' => '2026-02-05 20:00:00',
-            ]);
-        }
+        DB::table('representations')->insert($data);
     }
 }
