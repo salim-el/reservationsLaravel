@@ -3,15 +3,15 @@
 @section('title', 'Liste des localités')
 
 @section('content')
-    <h1>Liste des {{ $resource }}</h1>
+    <h1>Liste des localités</h1>
 
     <ul>
-        @foreach($localities as $l)
-            <li>
-                <a href="{{ route('locality.show', $l->id) }}">
-                    {{ $l->postal_code }} {{ $l->locality }}
-                </a>
-            </li>
-        @endforeach
+    @foreach($localities as $locality)
+        <li>
+            <a href="{{ route('locality.show', $locality->postal_code) }}">
+                {{ $locality->locality }}
+            </a>
+        </li>
+    @endforeach
     </ul>
 @endsection
