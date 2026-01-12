@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\Review;
-use App\Models\Show;
 use App\Models\User;
+use App\Models\Show;
 
 class ReviewSeeder extends Seeder
 {
@@ -16,28 +16,32 @@ class ReviewSeeder extends Seeder
         Review::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        $ayiti = Show::where('slug', 'ayiti')->first();
-        $cible = Show::where('slug', 'cible-mouvante')->first();
+        $bob = User::firstWhere('login', 'bob');
+        $anna = User::firstWhere('login', 'anna');
 
-        $bob = User::where('login', 'bob')->first();
-        $anna = User::where('login', 'anna')->first();
+        $ayiti = Show::firstWhere('slug', 'ayiti');
+        $cible = Show::firstWhere('slug', 'cible-mouvante');
 
-        if ($ayiti && $bob) {
-            Review::create([
-                'show_id' => $ayiti->id,
+        $data = [];
+
+        if ($bob && $ayiti) {
+            $data[] = [
                 'user_id' => $bob->id,
-                'rating' => 8,
-                'comment' => 'Très bon spectacle.',
-            ]);
+                'show_id' => $ayiti->id,
+                'stars' => 5,
+                'review' => 'Excellent spectacle.',
+            ];
         }
 
-        if ($cible && $anna) {
-            Review::create([
-                'show_id' => $cible->id,
+        if ($anna && $cible) {
+            $data[] = [
                 'user_id' => $anna->id,
-                'rating' => 7,
-                'comment' => 'Intéressant.',
-            ]);
+                'show_id' => $cible->id,
+                'stars' => 4,
+                'review' => 'Très bon, à voir.',
+            ];
         }
+
+        DB::table('reviews')->insert($data);
     }
 }

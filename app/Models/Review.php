@@ -11,23 +11,23 @@ class Review extends Model
     use HasFactory;
 
     protected $fillable = [
-        'show_id',
         'user_id',
-        'rating',
-        'comment',
+        'show_id',
+        'review',
+        'stars',
     ];
 
     protected $table = 'reviews';
 
-    public $timestamps = true;
-
-    public function show(): BelongsTo
-    {
-        return $this->belongsTo(Show::class);
-    }
+    public $timestamps = false;
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function show(): BelongsTo
+    {
+        return $this->belongsTo(Show::class);
     }
 }
