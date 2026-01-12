@@ -2,7 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +18,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ArtistSeeder::class,
             UserSeeder::class,
+            TypeSeeder::class,
         ]);
+
+        //Créer 1 admin
+        //…
+
     }
 }
