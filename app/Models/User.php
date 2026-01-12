@@ -34,8 +34,19 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * OneToMany : User → Reservation
+     */
     public function reservations(): HasMany
     {
         return $this->hasMany(Reservation::class);
+    }
+
+    /**
+     * OneToMany : User → Review
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
     }
 }

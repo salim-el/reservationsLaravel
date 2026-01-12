@@ -18,6 +18,14 @@ class DatabaseSeeder extends Seeder
             PriceSeeder::class,
             RoleSeeder::class,
             LocalitySeeder::class,
+
+            // Point 22 (dépendances)
+            LocationSeeder::class,
+            ShowSeeder::class,
+	    RepresentationSeeder::class,
+	    ReviewSeeder::class,
+
+
         ]);
     }
 }
