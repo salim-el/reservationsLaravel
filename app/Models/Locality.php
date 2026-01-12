@@ -9,12 +9,24 @@ class Locality extends Model
 {
     use HasFactory;
 
+    
+    protected $table = 'localities';
+
+    
+    protected $primaryKey = 'postal_code';
+
+    
+    protected $keyType = 'string';
+
+   
+    public $incrementing = false;
+
+   
     protected $fillable = [
         'postal_code',
         'locality',
     ];
 
-    protected $table = 'localities';
-
+    
     public $timestamps = false;
 }
