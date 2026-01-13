@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Price extends Model
 {
     use HasFactory;
-
-    protected $table = 'prices';
-    public $timestamps = false;
 
     protected $fillable = [
         'type',
@@ -21,22 +18,15 @@ class Price extends Model
         'end_date',
     ];
 
-    protected $casts = [
-        'start_date' => 'date',
-        'end_date'   => 'date',
-    ];
+    protected $table = 'prices';
 
-    protected static function booted(): void
-    {
-        static::addGlobalScope('camelCaseAliases', function (Builder $builder) {
-            // IMPORTANT : forcer le select pour que l'alias existe
-            $builder->selectRaw('prices.*, end_date as endDate');
-        });
-    }
+    public $timestamps = false;
 
-    // (optionnel) accès via $price->endDate
-    public function getEndDateAttribute()
+    /**
+     * Get the shows for which this price applies
+     */
+    public function shows(): BelongsToMany
     {
-        return $this->attributes['end_date'] ?? null;
+        return $this->belongsToMany(Show::class);
     }
 }

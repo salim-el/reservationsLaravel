@@ -10,32 +10,36 @@ class PriceSeeder extends Seeder
 {
     public function run(): void
     {
+        //Empty the table first
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
         Price::truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        $data = [
+        //Define data
+        $prices = [
             [
                 'type' => 'normal',
-                'price' => 14.90,
-                'description' => 'Ancien tarif normal.',
-                'start_date' => '2020-01-01',
-                'end_date' => '2023-12-31',
+                'price' => 12.00,
+                'description' => 'Tarif normal',
+                'start_date' => '2012-01-01',
+                'end_date' => null,
             ],
             [
-                'type' => 'normal',
-                'price' => 14.90,
-                'description' => 'Prix normal actuel.',
-                'start_date' => '2024-01-01',
-                'end_date' => '9999-12-31',
+                'type' => 'reduced',
+                'price' => 8.00,
+                'description' => 'Tarif réduit',
+                'start_date' => '2012-01-01',
+                'end_date' => null,
             ],
             [
-                'type' => 'enfants',
-                'price' => 7.90,
-                'description' => 'Tarif enfant <12 ans.',
-                'start_date' => '2020-01-01',
-                'end_date' => '9999-12-31',
+                'type' => 'child',
+                'price' => 6.00,
+                'description' => 'Tarif enfant',
+                'start_date' => '2012-01-01',
+                'end_date' => null,
             ],
         ];
 
-        DB::table('prices')->insert($data);
+        DB::table('prices')->insert($prices);
     }
 }
