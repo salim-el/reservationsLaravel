@@ -11,16 +11,8 @@ use Illuminate\Support\Str;
  */
 class UserFactory extends Factory
 {
-    /**
-     * The current password being used by the factory.
-     */
     protected static ?string $password;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
@@ -34,13 +26,11 @@ class UserFactory extends Factory
             'created_at' => now(),
             'updated_at' => null,
             'langue' => fake()->randomElements(['fr', 'nl', 'en'])[0],
-            'role' => fake()->randomElements(['member', 'affiliate', 'press'])[0],
+            // role field deleted by DB refactoring: users x roles (ManyToMany)
+            //'role' => fake()->randomElements(['member', 'affiliate', 'press'])[0],
         ];
     }
 
-    /**
-     * Indicate that the model's email address should be unverified.
-     */
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [

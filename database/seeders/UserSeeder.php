@@ -4,46 +4,63 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+use Carbon\Carbon;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Désactiver temporairement les contraintes FK
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         User::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
 
-        User::create([
-            'login' => 'admin',
-            'firstname' => 'Admin',
-            'lastname' => 'User',
-            'email' => 'admin@test.be',
-            'password' => Hash::make('password'),
-            'langue' => 'fr',
-        ]);
+        $users = [
+            [
+                'login'=>'bob',
+                'firstname'=>'Bob',
+                'lastname'=>'Sull',
+                'email'=>'bob@sull.com',
+                'password'=>'12345678',
+                'langue'=>'fr',
+                'created_at'=>'',
+                //'role'=>'admin',
+            ],
+            [
+                'login'=>'anna',
+                'firstname'=>'Anna',
+                'lastname'=>'Lyse',
+                'email'=>'anna.lyse@sull.com',
+                'password'=>'12345678',
+                'langue'=>'en',
+                'created_at'=>'',
+                //'role'=>'member',
+            ],
+            [
+                'login'=>'fred',
+                'firstname'=>'Fred',
+                'lastname'=>'Sull',
+                'email'=>'fred@sull.com',
+                'password'=>'12345678',
+                'langue'=>'fr',
+                'created_at'=>'',
+                //'role'=>'admin',
+            ],
+        ];
 
-        User::create([
-            'login' => 'bob',
-            'firstname' => 'Bob',
-            'lastname' => 'Sull',
-            'email' => 'bob@test.be',
-            'password' => Hash::make('password'),
-            'langue' => 'fr',
-        ]);
+        foreach ($users as &$user) {
+            $user['email_verified_at'] = Carbon::now()->toDateTimeString();
+            $user['created_at'] = Carbon::now()->toDateTimeString();
+            $user['password'] = Hash::make($user['password']);
+            $user['remember_token'] = Str::random(10);
+        }
+        unset($user);
 
-        User::create([
-            'login' => 'anna',
-            'firstname' => 'Anna',
-            'lastname' => 'Lyse',
-            'email' => 'anna@test.be',
-            'password' => Hash::make('password'),
-            'langue' => 'fr',
-        ]);
+        DB::table('users')->insert($users);
+
+        //Add 20 randomly generated users
+        User::factory(20)->create();
     }
 }

@@ -11,6 +11,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
+            RoleUserSeeder::class,
 
             TypeSeeder::class,
             ArtistSeeder::class,
@@ -24,11 +25,11 @@ class DatabaseSeeder extends Seeder
             RepresentationSeeder::class,
             ReservationSeeder::class,
 
-            ReviewSeeder::class,
-
             ArtistTypeShowSeeder::class,
             PriceShowSeeder::class,
             RepresentationReservationSeeder::class,
+
+            ReviewSeeder::class,
         ]);
     }
 }
