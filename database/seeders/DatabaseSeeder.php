@@ -26,6 +26,8 @@ class DatabaseSeeder extends Seeder
             RepresentationSeeder::class,
             ReservationSeeder::class,
             ReviewSeeder::class,
+	    ArtistTypeShowSeeder::class,
+
         ]);
     }
 }

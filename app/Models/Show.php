@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 
@@ -29,11 +30,7 @@ class Show extends Model
         'bookable',
     ];
 
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
+    
     protected $table = 'shows';
 
     /**
@@ -58,4 +55,12 @@ class Show extends Model
     {
     	return $this->hasMany(Review::class);
     }
+/**
+ * Get the performances (artists in a type of collaboration) for the show
+ */
+    public function artistTypes(): BelongsToMany
+    {
+    	return $this->belongsToMany(ArtistType::class);
+    }
+
 }
