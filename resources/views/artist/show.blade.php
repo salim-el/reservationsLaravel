@@ -5,17 +5,24 @@
 @section('content')
     <h1>{{ $artist->firstname }} {{ $artist->lastname }}</h1>
 
-    <nav>
-        <a href="{{ route('artist.index') }}">Retour à l'index</a> |
-        <a href="{{ route('artist.edit', $artist->id) }}">Modifier</a>
+    <h2>Liste des types</h2>
+    <ul>
+    @foreach($artist->types as $type)
+        <li>{{ $type->type }}</li>
+    @endforeach
+    </ul>
 
-<form method="post"
-      action="{{ route('artist.delete', $artist->id) }}"
-      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ?')">
+    <div><a href="{{ route('artist.edit' ,$artist->id) }}">Modifier</a></div>
+
+    <form method="post" action="{{ route('artist.delete', $artist->id) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ?')">
     @csrf
-    @method('DELETE')
+    <input type="hidden" name="_method" value="DELETE">
     <button>Supprimer</button>
-</form>
+    </form>
 
-    </nav>
+    <nav><a href="{{ route('artist.index') }}">Retour à l'index</a></nav>
+
+Route::get('/artist/{id}/edit', [ArtistController::class, 'edit'])->where('id', '[0-9]+')->name('artist.edit');
+Route::delete('/artist/{id}', [ArtistController::class, 'delete'])->where('id', '[0-9]+')->name('artist.delete');
+
 @endsection
