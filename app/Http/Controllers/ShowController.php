@@ -2,28 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Show;
 
 class ShowController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return view('show.index',[
-            'shows' => Show::all(),
-        ]);
+        $shows = Show::all();
+        return view('show.index', compact('shows'));
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
-        return view('show.show',[
-            'show' => Show::find($id),
+        $show = Show::find($id);
+
+        // Récupérer les artistes du spectacle et les grouper par type
+        $collaborateurs = [];
+
+        foreach ($show->artistTypes as $at) {
+            $collaborateurs[$at->type->type][] = $at->artist;
+        }
+
+        return view('show.show', [
+            'show' => $show,
+            'collaborateurs' => $collaborateurs,
         ]);
     }
 }
