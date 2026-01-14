@@ -1,48 +1,26 @@
 @extends('layouts.main')
 
-@section('title', 'Fiche d\'un lieu de spectacle')
+@section('title', 'Détails de la localité')
 
 @section('content')
-<article>
-    <h1>{{ $location->designation }}</h1>
+    <h1>Localité : {{ $locality->postal_code }} {{ $locality->locality }}</h1>
 
-    <address>
-        <p>{{ $location->address }}</p>
-        <p>
-            {{ $location->locality->postal_code }}
-            {{ $location->locality->locality }}
-        </p>
+    <h2>Lieux de spectacle dans cette localité</h2>
 
-        @if($location->website)
-        <p>
-            <a href="{{ $location->website }}" target="_blank">
-                {{ $location->website }}
-            </a>
-        </p>
-        @else
-        <p>Pas de site web</p>
-        @endif
-        
-        @if($location->phone)
-        <p>
-            <a href="tel:{{ $location->phone }}">
-                {{ $location->phone }}
-            </a>
-        </p>
-        @else
-        <p>Pas de téléphone</p>
-        @endif
-    </address>
-    
-    <h2>Liste des spectacles</h2>
-    <ul>
-    @foreach($location->shows as $show)
-        <li>{{ $show->title }}</li>
-    @endforeach
-    </ul>
-</article>
-
-<nav>
-    <a href="{{ route('location.index') }}">Retour à l'index</a>
-</nav>
+    @if($locality->locations->count() > 0)
+        <ul>
+            @foreach($locality->locations as $loc)
+                <li>
+                    <a href="{{ route('location.show', $loc->id) }}">
+                        {{ $loc->designation }}
+                    </a>
+                    @if($loc->website)
+                        - <a href="{{ $loc->website }}">{{ $loc->website }}</a>
+                    @endif
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <p>Aucun lieu trouvé pour cette localité.</p>
+    @endif
 @endsection

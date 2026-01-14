@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Locality;
-use Illuminate\Http\Request;
 
 class LocalityController extends Controller
 {
@@ -14,23 +13,17 @@ class LocalityController extends Controller
     {
         $localities = Locality::all();
 
-        return view('locality.index', [
-            'localities' => $localities,
-        ]);
+        return view('locality.index', compact('localities'));
     }
 
     /**
      * Display the specified resource.
      * Affiche une localité et tous les lieux qui s’y trouvent
      */
-    public function show(int $postal_code)
+    public function show(int $id)
     {
-        $locality = Locality::where('postal_code', $postal_code)
-            ->with('locations')
-            ->firstOrFail();
+        $locality = Locality::with('locations')->findOrFail($id);
 
-        return view('locality.show', [
-            'locality' => $locality,
-        ]);
+        return view('locality.show', compact('locality'));
     }
 }

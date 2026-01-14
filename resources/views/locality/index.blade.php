@@ -1,19 +1,16 @@
 @extends('layouts.main')
 
-@section('title', 'Liste des lieux de spectacle')
+@section('title', 'Liste des localités')
 
 @section('content')
-    <h1>Liste des lieux de spectacle</h1>
+    <h1>Liste des localités</h1>
 
     <ul>
-    @foreach($locations as $location)
+    @foreach($localities as $locality)
         <li>
-            <a href="{{ route('location.show', $location->id) }}">
-                {{ $location->designation }}
+            <a href="{{ route('locality.show', $locality->id) }}">
+                {{ $locality->postal_code }} {{ $locality->locality }}
             </a>
-            @if($location->website)
-            - <a href="{{ $location->website }}">{{ $location->website }}</a>
-            @endif
         </li>
     @endforeach
     </ul>
